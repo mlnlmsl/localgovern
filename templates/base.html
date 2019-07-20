@@ -208,15 +208,15 @@
                 <ul class="list-unstyled components">
                     {% comment %} <p>Dashboard</p> {% endcomment %}
                     <li class="">
-                        <a href={% url 'dashboard' %}>Dashboard</a>
+                        <a href={% url 'dashboard' %}> <span class="glyphicon glyphicon-home"></span> Dashboard</a>
                     </li>
       
                     <li>
-                        <a href={% url 'comparision' %}>Comparative Analysis</a>
+                        <a href={% url 'comparision' %}> <span class="glyphicon glyphicon-stats"></span> Comparative Analysis</a>
                     </li>
-                    {% comment %} <li>
-                        <a href="#">Contact</a>
-                    </li> {% endcomment %}
+                    <li>
+                        <a href="#"> <span class="glyphicon glyphicon-plus"></span> New Project</a>
+                    </li> 
                 </ul>
             </nav>
 

@@ -4,7 +4,7 @@ Dashboard
 {% endblock title %}
 {% block style %}
  <style>
- #issues{
+ #issues, #issuesbyward{
      border: 1px solid #999e9e;
      display:inline-block;
  }
@@ -38,7 +38,7 @@ Dashboard
             data: ['Construction', 'Socail Issues', 'Education', 'Drinking Water', 'Sanitation']
         },
         series: [{
-            name: 'series',
+            name: 'Issues',
             type: 'pie',
             radius: '55%',
             center: ['50%', '60%'],
@@ -97,23 +97,23 @@ Dashboard
             center: ['50%', '60%'],
             data: [{
                     value: 200,
-                    name: 'Construction'
+                    name: 'Ward 1'
                 },
                 {
                     value: 100,
-                    name: 'Socail Issues'
+                    name: 'Ward 2'
                 },
                 {
                     value: 140,
-                    name: 'Education'
+                    name: 'Ward 3'
                 },
                 {
                     value: 135,
-                    name: 'Drinking Water'
+                    name: 'Ward 4'
                 },
                 {
                     value: 154,
-                    name: 'Sanitation'
+                    name: 'Ward 5'
                 }
             ],
             itemStyle: {
