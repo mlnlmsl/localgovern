@@ -1,0 +1,6 @@
+.vscode
+__pycache__
+*.pyc
+db.sqlite3
+package-lock.json
+node_modules

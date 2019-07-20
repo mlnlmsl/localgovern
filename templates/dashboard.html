@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block title %}
+Dashboard
+{% endblock title %}
+{% block style %}
+ <style>
+ #issues{
+     border: 1px solid #999e9e;
+     display:inline-block;
+ }
+ </style>
+{% endblock style %}
+{% block content %}
+
+<div class="row">
+    <div id="issues" style="width:80%; height:400px;"></div> 
+    <div id="issuesbyward" style="width:80%; height:400px;"></div>
+</div>
+{{data}}
+{% endblock content %}
+
+{% block script %}
+<script>
+    var myChart = echarts.init(document.getElementById('issues'));
+    option = {
+        title: {
+            text: 'Issues by Category',
+
+            x: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: ['Construction', 'Socail Issues', 'Education', 'Drinking Water', 'Sanitation']
+        },
+        series: [{
+            name: 'series',
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '60%'],
+            data: [{
+                    value: 335,
+                    name: 'Construction'
+                },
+                {
+                    value: 310,
+                    name: 'Socail Issues'
+                },
+                {
+                    value: 234,
+                    name: 'Education'
+                },
+                {
+                    value: 135,
+                    name: 'Drinking Water'
+                },
+                {
+                    value: 15480,
+                    name: 'Sanitation'
+                }
+            ],
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        }]
+    };
+    myChart.setOption(option);
+    //chart issue by ward
+    var myChartWard = echarts.init(document.getElementById('issuesbyward'));
+    optionWard = {
+        title: {
+            text: 'Issues by Ward',
+
+            x: 'center'
+        },
+        tooltip: {
+            trigger: 'Issue',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: ['Ward 1', 'Ward 2', 'Ward 3', 'Ward 4', 'Ward 5']
+        },
+        series: [{
+            name: 'series',
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '60%'],
+            data: [{
+                    value: 200,
+                    name: 'Construction'
+                },
+                {
+                    value: 100,
+                    name: 'Socail Issues'
+                },
+                {
+                    value: 140,
+                    name: 'Education'
+                },
+                {
+                    value: 135,
+                    name: 'Drinking Water'
+                },
+                {
+                    value: 154,
+                    name: 'Sanitation'
+                }
+            ],
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        }]
+    };
+    myChartWard.setOption(optionWard);
+</script>
+{% endblock script %}
