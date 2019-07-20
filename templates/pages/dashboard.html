@@ -13,7 +13,7 @@
     <div id="issues" style="width:80%; height:400px;"></div> 
     <div id="issuesbyward" style="width:80%; height:400px;"></div>
 </div>
-{{data}}
+
 {% endblock content %}
 
 {% block script %}
@@ -40,24 +40,24 @@
             radius: '55%',
             center: ['50%', '60%'],
             data: [{
-                    value: 335,
-                    name: 'Construction'
-                },
-                {
-                    value: 310,
-                    name: 'Socail Issues'
-                },
-                {
-                    value: 234,
-                    name: 'Education'
-                },
-                {
-                    value: 135,
+                    value: {{num_drinking_water}},
                     name: 'Drinking Water'
                 },
                 {
-                    value: 15480,
-                    name: 'Sanitation'
+                    value: {{num_social_issues}},
+                    name: 'Socail Issues'
+                },
+                {
+                    value: {{num_education}},
+                    name: 'Education'
+                },
+                {
+                    value: {{num_transperiancy}},
+                    name: 'Transpariency'
+                },
+                {
+                    value: {{num_health}},
+                    name: 'Health'
                 }
             ],
             itemStyle: {

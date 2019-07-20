@@ -17,7 +17,60 @@ config = {
 
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
-data = db.child('')
+drinking_water = db.child('Municipality').child('Kathmandu').child('Wardno1').child('Problems').child('Drinking Water').shallow().get().val()
+education = db.child('Municipality').child('Kathmandu').child('Wardno1').child('Problems').child('Education').shallow().get().val()
+health = db.child('Municipality').child('Kathmandu').child('Wardno1').child('Problems').child('Health').shallow().get().val()
+social_issues = db.child('Municipality').child('Kathmandu').child('Wardno1').child('Problems').child('Social Issues').shallow().get().val()
+transperiancy = db.child('Municipality').child('Kathmandu').child('Wardno1').child('Problems').child('Transparency').shallow().get().val()
+
+problem1 = []
+
+for i in transperiancy:
+    problem1.append(i)
+
+problem1.sort(reverse=True)
+num_transperiancy = len(problem1)
+
+problem2 = []
+
+for i in drinking_water:
+    problem2.append(i)
+
+problem2.sort(reverse=True)
+num_drinking_water = len(problem2)
+
+problem3 = []
+
+for i in education:
+    problem3.append(i)
+
+problem3.sort(reverse=True)
+num_education = len(problem3)
+
+problem4 = []
+
+for i in health:
+    problem4.append(i)
+
+problem4.sort(reverse=True)
+num_health = len(problem4)
+
+problem5 = []
+
+for i in social_issues:
+    problem5.append(i)
+
+problem5.sort(reverse=True)
+num_social_issues = len(problem5)
+
+context = {
+    "num_drinking_water" : num_drinking_water,
+    "num_education" : num_education,
+    "num_health" : num_health,
+    "num_social_issues" : num_social_issues,
+    "num_transperiancy" : num_transperiancy,
+}
+
 
 # auth = firebase.auth()
 def signin(request):
@@ -41,7 +94,7 @@ def signin(request):
 
 
 def dashboard(request):
-    return render(request, 'pages/dashboard.html')
+    return render(request, 'pages/dashboard.html', context)
 
 def comparision(request):
     return render(request, 'pages/comparision.html')
