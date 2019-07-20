@@ -13,8 +13,10 @@ Dashboard
 {% block content %}
 
 <div class="row">
-    <div id="issues" style="width:80%; height:400px;"></div> 
-    <div id="issuesbyward" style="width:80%; height:400px;"></div>
+<div class="col-md-6"><div id="issues" style="width:100%; height:400px;"></div> </div>
+<div class="col-md-6"> <div id="issuesbyward" style="width:100%; height:400px;"></div></div>
+    
+   
 </div>
 {{data}}
 {% endblock content %}
@@ -82,7 +84,7 @@ Dashboard
             x: 'center'
         },
         tooltip: {
-            trigger: 'Issue',
+            trigger: 'issuesbyward',
             formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
         legend: {
