@@ -37,7 +37,7 @@ def signin(request):
         else:
             messages.error(request, 'Invalid username or Password')
             return redirect('login')
-
+    
     else:
         return render(request, 'pages/login.html')
 
