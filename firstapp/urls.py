@@ -9,5 +9,5 @@ urlpatterns = [
     path('comparision/', views.comparision, name='comparision'),
     path('get_issues', views.issues_bar),
     path('issues_by_ward', views.issues_by_ward),
-    # path('ward_compare')
+    path('feedback',views.get_feedbacks)
 ]

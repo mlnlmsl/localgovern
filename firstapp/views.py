@@ -61,49 +61,77 @@ def signout(request):
 
 
 def issues_bar(request):
-    return JsonResponse(format_wardwise_pie())
+    problems = []
+    counts = []
+    ward_wise_value = db.child('Municipality').child(
+        'Kathmandu').child('Wardno1').child('Problems').get().val()
+    for problem in ward_wise_value:
+        problems.append(problem)
+        problem_dict = db.child('Municipality').child('Kathmandu').child(
+            'Wardno1').child('Problems').child(problem).shallow().get().val()
+        counts.append({'name': problem, 'value': len(problem_dict)})
+    return JsonResponse(format_wardwise_pie(problems, counts))
 
 
 def issues_by_ward(request):
-    return JsonResponse(format_pie_data())
+    wards = []
+    counts = []
+    ward_wise_value = db.child('Municipality').child(
+        'Kathmandu').get().val()
+    for ward in ward_wise_value:
+        problem_count = 0
+        wards.append(ward)
+        ward_wise_problems = db.child('Municipality').child(
+            'Kathmandu').child(ward).child('Problems').get().val()
+        for problem in ward_wise_problems:
+            problem_dict = db.child('Municipality').child('Kathmandu').child(
+                'Wardno1').child('Problems').child(problem).shallow().get().val()
+            if problem_dict is not None:
+                problem_count += len(problem_dict)
+        counts.append({'name':ward,'value':problem_count})
+    print(counts)
+    return JsonResponse(format_pie_data(wards, counts))
 
 
-def format_pie_data():
+def get_feedbacks(request):
+    ward_wise_feedback = db.child('Municipality').child(
+        'Kathmandu').child('Wardno1').child('UserFeedback').get()
+    for feedback in ward_wise_feedback:
+        print(feedback)
+    return JsonResponse(ward_wise_feedback.val())
+
+
+def format_pie_data(wards,counts):
     data = {}
-    legend_data = ['Ward 1', 'Ward 2']
-    series_data = [{'value': 200, 'name': 'Ward 1'},
-                   {'value': 200, 'name': 'Ward 2'}]
-    data['title'] =  {'text': 'Issues by Ward', 'x': 'center'}
-    data['tooltip'] = {'trigger': 'Issues',
-                        'formatter': '{a} <br/>{b} : {c} ({d}%)'}
+    legend_data = wards
+    series_data = counts
+    data['title'] = {'text': 'Issues by Ward', 'x': 'center'}
+    data['tooltip'] = {'trigger': 'item',
+                       'formatter': '{a} <br/>{b} : {c} ({d}%)'}
 
-    data['legend'] = {'orient':'vertical','left': 'left','data':legend_data}
+    data['legend'] = {'orient': 'vertical',
+                      'left': 'left', 'data': legend_data}
     data['series'] = [{'name': 'series', 'type': 'pie',
-                        'radius': '55%', 'cemter': '["50%","60%"]', 'data': series_data}]
+                       'radius': '55%', 'center': ["50%", "60%"], 'data': series_data}]
     data['itemStyle'] = {'emphasis': {'shadowBlur': 10,
-                                       'shadowOffsetX': 0, 'shadowColor': 'rgba(0, 0, 0, 0.5)'}}
+                                      'shadowOffsetX': 0, 'shadowColor': 'rgba(0, 0, 0, 0.5)'}}
 
     # data = {'legend_data': legend_data, 'series_data': series_data}
     return data
 
 
-def format_wardwise_pie():
+def format_wardwise_pie(problems, counts):
     data = {}
-    legend_data = ['Construction', 'Socail Issues',
-                   'Education', 'Drinking Water', 'Sanitation']
-    series_data = [{'value': 200, 'name': 'Construction'},
-                   {'value': 200, 'name': 'Socail Issues'},
-                   {'value': 200, 'name': 'Education'},
-                   {'value': 200, 'name': 'Drinking Water'},
-                   {'value': 200, 'name': 'Sanitation'}]
+    legend_data = problems
+    series_data = counts
     data['title'] = {'text': 'Issues by Category', 'x': 'center'}
-    data['tooltip'] = {'trigger': 'Issues',
+    data['tooltip'] = {'trigger': 'item',
                        'formatter': '{a} <br/>{b} : {c} ({d}%)'}
 
     data['legend'] = {'orient': 'vertical',
                       'left': 'left', 'data': legend_data}
     data['series'] = [{'name': 'Issues', 'type': 'pie',
-                       'radius': '55%', 'cemter': '["50%","60%"]', 'data': series_data}]
+                       'radius': '55%', 'center': ['50%', '60%'], 'data': series_data}]
     data['itemStyle'] = {'emphasis': {'shadowBlur': 10,
                                       'shadowOffsetX': 0, 'shadowColor': 'rgba(0, 0, 0, 0.5)'}}
     return data
