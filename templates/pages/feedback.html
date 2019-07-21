@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ul>
+ {% for  feedback in feedbacks %}
+   <li>{{feedback}}</li> 
+ {% endfor %}
+</ul>
+{% endblock content %}

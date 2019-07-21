@@ -37,7 +37,7 @@ def signin(request):
         else:
             messages.error(request, 'Invalid username or Password')
             return redirect('login')
-    
+
     else:
         return render(request, 'pages/login.html')
 
@@ -88,20 +88,24 @@ def issues_by_ward(request):
                 'Wardno1').child('Problems').child(problem).shallow().get().val()
             if problem_dict is not None:
                 problem_count += len(problem_dict)
-        counts.append({'name':ward,'value':problem_count})
+        counts.append({'name': ward, 'value': problem_count})
     print(counts)
     return JsonResponse(format_pie_data(wards, counts))
 
 
 def get_feedbacks(request):
+    feeds = {}
     ward_wise_feedback = db.child('Municipality').child(
-        'Kathmandu').child('Wardno1').child('UserFeedback').get()
-    for feedback in ward_wise_feedback:
-        print(feedback)
-    return JsonResponse(ward_wise_feedback.val())
+        'Kathmandu').child('Wardno1').child('UserFeedback').get().val()
+    for title in ward_wise_feedback:
+        feedback = db.child('Municipality').child(
+            'Kathmandu').child('Wardno1').child('UserFeedback').child(title).get().val()
+        # print(feedback, flush=True)
+        feeds[title] = feedback
+    return render(request, 'pages/feedback.html', {'feedbacks': ward_wise_feedback})
 
 
-def format_pie_data(wards,counts):
+def format_pie_data(wards, counts):
     data = {}
     legend_data = wards
     series_data = counts
