@@ -27,7 +27,7 @@ def signin(request):
         username = request.POST['username']
         password = request.POST['password']
 
-        user = auth.authenticate(request, username=username, password=password)
+        user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
@@ -95,13 +95,14 @@ def issues_by_ward(request):
 
 def get_feedbacks(request):
     feeds = {}
-    ward_wise_feedback = db.child('Municipality').child(
-        'Kathmandu').child('Wardno1').child('UserFeedback').get().val()
-    for title in ward_wise_feedback:
-        feedback = db.child('Municipality').child(
-            'Kathmandu').child('Wardno1').child('UserFeedback').child(title).get().val()
-        # print(feedback, flush=True)
-        feeds[title] = feedback
+    ward_wise_feedback = dict(db.child('Municipality').child(
+        'Kathmandu').child('Wardno1').child('UserFeedback').get().val())
+    print(ward_wise_feedback)
+    # for title in ward_wise_feedback:
+    #     feedback = db.child('Municipality').child(
+    #         'Kathmandu').child('Wardno1').child('UserFeedback').child(title).get().val()
+    #     # print(feedback, flush=True)
+    #     feeds[title] = feedback
     return render(request, 'pages/feedback.html', {'feedbacks': ward_wise_feedback})
 
 
