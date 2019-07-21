@@ -207,14 +207,14 @@
 
             <ul class="list-unstyled components">
                 {% comment %} <p>Dashboard</p> {% endcomment %}
-                <li class="">
+                <li class='{% if request.resolver_match.url_name == "dashboard" %}active{% endif %}'>
                     <a href={% url 'dashboard' %}><span class="glyphicon glyphicon-home"></span> Dashboard</a>
                 </li>
 
-                <li>
+                <li class='{% if request.resolver_match.url_name == "comparision" %}active{% endif %}'>
                     <a href={% url 'comparision' %}> <span class="glyphicon glyphicon-stats"></span> Comparative Analysis</a>
                 </li>
-                <li>
+                <li class='{% if request.resolver_match.url_name == "feedback" %}active{% endif %}'>
                      <a href="{% url 'feedback' %}"> <span class="glyphicon glyphicon-plus"></span> View Feedbacks</a>
                 </li>
                 <li>
